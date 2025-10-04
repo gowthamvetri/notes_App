@@ -1,31 +1,29 @@
-import express from 'express'
-import cors from 'cors'
-import dotenv from 'dotenv'
-import connectdb from './config/connectdb.js'
-import userRout from './routs/user.route.js'
-import notesRoute from './routs/notes.route.js'
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import serverless from "serverless-http";
+import connectdb from "./config/connectdb.js";
+import userRout from "./routs/user.route.js";
+import notesRoute from "./routs/notes.route.js";
 
-dotenv.config()
-const app = express()
+dotenv.config();
+const app = express();
 
+// Middleware
+app.use(express.json());
+app.use(cors({ origin: "*" }));
 
-app.use(express.json())
+// Connect to Mongo
+connectdb();
 
-app.use(cors({
-    origin:"*"
-}))
+// Routes
+app.get("/", (req, res) => {
+  return res.json({ message: "Hello from Server 🚀" });
+});
 
-connectdb().then(()=>{
-    app.listen(8000,()=>{
-    console.log("Server is running")
-})}
-)
+app.use("/api/user", userRout);
+app.use("/api/notes", notesRoute);
 
-app.get('/',(req,res)=>{
-    return res.json({
-        message : "Hello from Server"
-    })
-})
-
-app.use('/api/user',userRout)
-app.use('/api/notes',notesRoute)
+// ✅ Do NOT app.listen() on Vercel
+export const handler = serverless(app);
+export default app;
