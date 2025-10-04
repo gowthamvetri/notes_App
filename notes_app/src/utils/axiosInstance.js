@@ -2,7 +2,7 @@ import axios from 'axios'
 import {BASE_URL} from './constants.js'
 
 const axiosInstance = axios.create({
-    baseURL : 'https://notes-app-eeqo.vercel.app/',
+    baseURL : 'https://notes-app-8qur.vercel.app/',
     timeout : 10000,
     headers : {
         "Content-Type" : "application/json"
