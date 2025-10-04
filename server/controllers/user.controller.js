@@ -1,6 +1,6 @@
 import userModel from "../models/user.model.js";
 import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 
 export async function CreateUser(req, res) {
   try {
